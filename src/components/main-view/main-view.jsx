@@ -6,6 +6,11 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+
+//import bootstrap
+import { Container, Nav, Navbar, Row, Col } from "react-bootstrap";
+
+import './main-view.scss';
  
 export class MainView extends React.Component {
 
@@ -53,10 +58,38 @@ export class MainView extends React.Component {
 
         return (
             <div className="main-view">
-                {selectedMovie ? <MovieView movie = {selectedMovie} onBackClick={newSelectedMovie => {this.setSelectedMovie(newSelectedMovie);}}/>
-                : movies.map(movie => (<MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => {this.setSelectedMovie(movie) }} />
-                ))
-        }
+                <Navbar bg="dark" variant="dark" expand="lg">
+                    <Container fluid className="navBarContainer">
+                        <Navbar.Brand href="#home">MyFlixMovies</Navbar.Brand>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="me-auto">
+                                    <Nav.Link href="#home">Home</Nav.Link>
+                                    <Nav.Link href="#">Profile</Nav.Link>
+                                    <Nav.Link href="#">Search</Nav.Link>
+                                </Nav>
+                            </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+                <Container fluid className="mainViewContainer">
+                {selectedMovie ? (
+                <Row className="justify-content-md-center">
+                    <Col md={9}>
+                    <MovieView movie = {selectedMovie} onBackClick={newSelectedMovie => {this.setSelectedMovie(newSelectedMovie);}}/>
+                    </Col>
+                </Row>
+                )
+                :   (
+                    <Container fluid>
+                    <Row className="justify-content-md-center">
+                        {movies.map(movie => (<Col xs={10} sm={6} lg={3} style={{paddingTop: "32px"}}><MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => {this.setSelectedMovie(movie) }} />
+                    </Col>
+                ))}
+                </Row>
+                </Container>
+                    )   
+                }
+                </Container>
             </div>
         );
     }

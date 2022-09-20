@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Form, Button, Card } from 'react-bootstrap';
+import { RegistrationView } from '../registration-view/registration-view';
+import './login-view.scss';
 
 export function LoginView(props) {
     const [ username, setUsername ] = useState('');
@@ -10,14 +13,22 @@ export function LoginView(props) {
         props.onLoggedIn(username);
     };
 
+
     return (
-        <form>
-            <label>Username: <input type="text" value={username} onChange={e => setUsername(e.target.value)} /></label>
-            <label>Password: <input type="password"  value={password} onChange={e => setPassword(e.target.value)} /></label>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-         
-            <button type="button" onClick={handleSubmit}>Register</button>
-        </form>
-         
+        
+        <Card style={{margin: '80px', padding: '22px'}}>
+        <Form>
+            <Form.Group controlId="formUsername">
+                <Form.Label>Username: </Form.Label>
+                <Form.Control type="text" onChange={e => setUsername(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+                <Form.Label>Password: </Form.Label>
+                <Form.Control type="password" onChange={e => setPassword(e.target.value)} />
+            </Form.Group>
+            <Button style={{marginTop: '22px'}} variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+            <Button style={{marginTop: '22px', marginLeft: '22px'}} variant="secondary" type="button"         >New Here? Register</Button>
+        </Form> 
+        </Card>
     );
 }
