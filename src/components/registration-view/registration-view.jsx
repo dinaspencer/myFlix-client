@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-<<<<<<< Updated upstream
-=======
 import axios from 'axios';
 import { Container, Form, Button, Card, CardGroup, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './registration-view.scss';
->>>>>>> Stashed changes
 
 export function RegistrationView() {
     const [ username, setUsername ] = useState('');
@@ -50,20 +47,6 @@ export function RegistrationView() {
 
     const handleRegister = (e) => {
         e.preventDefault();
-<<<<<<< Updated upstream
-        console.log(username, password, email, birthday);
-        props.onLoggedIn(username);
-    };
-
-    return (
-        <form>
-            <label>Username: <input type="text" value={username} onChange={e => setUsername(e.target.value)} /></label>
-            <label>Password: <input type="password"  value={password} onChange={e => setPassword(e.target.value)} /></label>
-            <label>Email: <input type="text"  value={email} onChange={e => setEmail(e.target.value)} /></label>
-            <label>Birthday: <input type="date"  value={birthday} onChange={e => setBirthday(e.target.value)} /></label>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-        </form>
-=======
         const isReq = validate();
         if(isReq) {
         axios.post('https://dinaspencer-myflix.herokuapp.com/registration', {
@@ -142,7 +125,6 @@ export function RegistrationView() {
              </Row>
         </Container>
         
->>>>>>> Stashed changes
     );
     }
 
