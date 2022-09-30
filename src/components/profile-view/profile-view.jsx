@@ -3,8 +3,10 @@ import axios from "axios";
 import "./profile-view.scss";
 import { Container, Button, Card, Row, Col, Form, Figure } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setUser, updateUser, deleteUser } from '../../actions/actions';
 
-export class ProfileView extends React.Component {
+ class ProfileView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -87,31 +89,23 @@ export class ProfileView extends React.Component {
   };
 
   setUsername(value) {
-    this.setState({
-      Username: value,
-    });
-    this.Username = value;
+    
+    this.state.Username = value;
   }
 
   setPassword(value) {
-    this.setState({
-      Password: value,
-    });
-    this.Password = value;
+    
+    this.state.Password = value;
   }
 
   setEmail(value) {
-    this.setState({
-      Email: value,
-    });
-    this.Email = value;
+    
+    this.state.Email = value;
   }
 
   setBirthday(value) {
-    this.setState({
-      Birthday: value,
-    });
-    this.Birthday = value;
+   
+    this.state.Birthday = value;
   }
 
   deleteProfile() {
@@ -135,11 +129,15 @@ export class ProfileView extends React.Component {
       });
   }
 
-  removeFavorite = (e, movie) => {
-      const username = localStorage.getItem('user');
+  removeFavorite = (e, movieId) => {
+    e.preventDefault();
+      const user = localStorage.getItem('user');
       const token = localStorage.getItem('token');
+      
       console.log(this.props);
-      axios.delete(`https://dinaspencer-myflix.herokuapp.com/users/${Username}/movies/${movie._id}`, {headers: {Authorization: `Bearer ${token}`}
+
+    
+      axios.delete(`https://dinaspencer-myflix.herokuapp.com/users/${user}/movies/${movieId}`, {headers: {Authorization: `Bearer ${token}`}
   }).then((response) => {
       console.log(response);
       alert('You have removed the movie from your favorites.');
@@ -151,7 +149,7 @@ export class ProfileView extends React.Component {
   };
 
   render() {
-    const { movies } = this.props;
+    const { movies, removeFavorite } = this.props;
     const { Username, Password, Email, Birthday, FavoriteMovies } = this.state;
     console.log(this.state);
     return (
@@ -248,14 +246,14 @@ export class ProfileView extends React.Component {
                   <Col key={movie._id} className="fav-movie">
                     <Card>
                       <Link to={`/movies/${movie._id}`}>
-                        <Card.Img src={movie.ImagePath} alt={Title} />
+                        <Card.Img src={ImagePath} alt={Title} />
                         <h2>{Title}</h2>
                       </Link>
                     
                     <Button
                       className="remove"
                       variant="warning"
-                      onClick={(e) => this.removeFavorite(e, movie)}
+                      onClick={this.removeFavorite}
                     >
                       Remove from Favorites
                     </Button>
@@ -272,3 +270,12 @@ export class ProfileView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    movies: state.movies,
+  };
+};
+
+export default connect(mapStateToProps, { setUser, updateUser, deleteUser })(ProfileView);
