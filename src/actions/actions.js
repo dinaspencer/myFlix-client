@@ -3,10 +3,10 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_USER = 'SET_USER';
 export const SET_USERDELETE = 'SET_USERDELETE';
 export const SET_USERUPDATE = 'SET_USERUPDATE';
-export const SET_REGISTRATION = 'SET REGISTRATION';
 export const SET_DIRECTOR = 'SET_DIRECTOR';
 export const SET_GENRE = 'SET_GENRE';
 export const SET_FAVORITES = 'SET FAVORITES';
+export const SET_REMOVEFAVORITES = 'SET_REMOVEFAVORITES';
 
 export function setMovies(value) {
     return {
@@ -44,17 +44,16 @@ export function setUserUpdate(value) {
     };
 }
 
-export function setRegistration(value) {
+export function setFavorites(value) {
     return {
-        type: SET_REGISTRATION,
+        type: SET_FAVORITES,
         value
     };
 }
 
-
-export function setFavorites(value) {
+export function setRemoveFavorites(value) {
     return {
-        type: SET_FAVORITES,
+        type: SET_REMOVEFAVORITES,
         value
     };
 }

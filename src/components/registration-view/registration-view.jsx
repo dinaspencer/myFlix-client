@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Card, CardGroup, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/actions';
 import './registration-view.scss';
 
 export function RegistrationView() {
@@ -55,7 +57,7 @@ export function RegistrationView() {
             Email: email,
             Birthday: birthday
         }).then(response => {
-            const data = response.data;
+            this.props.setUser = response.data;
             console.log(data);
             alert('Registration successful, please log in');
             window.open('/', '_self');

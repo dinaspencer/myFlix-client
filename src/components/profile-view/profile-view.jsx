@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./profile-view.scss";
-import { Container, Button, Card, Row, Col, Form, Figure } from "react-bootstrap";
+import { Container, Button, Card, Row, Col, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setUser, updateUser, deleteUser } from '../../actions/actions';
@@ -40,6 +40,7 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        
         this.setState({
           Username: response.data.Username,
           Password: response.data.Password,
@@ -108,7 +109,8 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
     this.state.Birthday = value;
   }
 
-  deleteProfile() {
+  deleteProfile(e, Username) {
+    e.preventDefault();
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
@@ -149,8 +151,8 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
   };
 
   render() {
-    const { movies, removeFavorite } = this.props;
-    const { Username, Password, Email, Birthday, FavoriteMovies } = this.state;
+    const { movies, user } = this.props;
+   const { Username, Password, Email, Birthday, FavoriteMovies } = this.state;
     console.log(this.state);
     return (
       <Container>
@@ -273,9 +275,15 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
 
 let mapStateToProps = (state) => {
   return {
-    user: state.user,
+    Username: state.username,
+    Password: state.password,
+    Email: state.email,
+    Birthday: state.birthday,
+    FavoriteMovies: state.FavoriteMovies,
     movies: state.movies,
   };
 };
+
+
 
 export default connect(mapStateToProps, { setUser, updateUser, deleteUser })(ProfileView);
