@@ -1,10 +1,8 @@
 export const SET_MOVIES = 'SET_MOVIES';
 export const SET_FILTER = 'SET_FILTER';
-export const SET_USER = 'SET_USER';
-export const SET_USERDELETE = 'SET_USERDELETE';
-export const SET_USERUPDATE = 'SET_USERUPDATE';
-export const SET_DIRECTOR = 'SET_DIRECTOR';
-export const SET_GENRE = 'SET_GENRE';
+export const CREATE_USER = 'CREATE_USER';
+export const DELETE_USER = 'DELETE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 export const SET_FAVORITES = 'SET FAVORITES';
 export const SET_REMOVEFAVORITES = 'SET_REMOVEFAVORITES';
 
@@ -22,25 +20,31 @@ export function setFilter(value) {
     };
 }
 
-export function setUser(value) {
+export function createUser(username, password, email, birthday) {
     return {
-        type: SET_USER,
-        value
+        type: CREATE_USER,
+        username: username,
+        password: password,
+        email: email,
+        birthday: birthday
     };
 }
 
-export function setUserDelete(value) {
+export function deleteUser(id) {
     return {
-        type: SET_USERDELETE,
-        value
+        type: DELETE_USER,
+        id
     };
 }
 
 
-export function setUserUpdate(value) {
+export function updateUser(username, password, email, birthday) {
     return {
-        type: SET_USERUPDATE,
-        value
+        type: UPDATE_USER,
+        username: username,
+        password: password,
+        email: email,
+        birthday: birthday
     };
 }
 

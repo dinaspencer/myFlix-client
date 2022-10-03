@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { SET_FILTER, SET_MOVIES, SET_USER, SET_USERUPDATE, SET_USERDELETE,  SET_FAVORITES } from "../actions/actions";
+import { SET_FILTER, SET_MOVIES, CREATE_USER, UPDATE_USER, DELETE_USER,  SET_FAVORITES } from "../actions/actions";
 
 function visibilityFilter(state='', action) {
     switch (action.type) {
@@ -20,31 +20,32 @@ function movies(state = [], action) {
     }
 }
 
+
+
 function setUser(state={}, action) {
     switch(action.type) {
-        case SET_USER:
-            console.log('SET_USER triggered');
-            return action.value;
+        case CREATE_USER:
+            return {
+                username: action.username,
+                password: action.password,
+                email: action.email,
+                birthday: action.birthday,
+                };
+        
+        case UPDATE_USER: 
+                return {
+                  username: action.username,
+                  password: action.password,
+                  email: action.email,
+                  birthday: action.birthday,  
+                };
+        
+         case DELETE_USER: 
+                 return {
+                    users: state.users.filter((user, index) => index != action.id )
+                 };
             default: return state;
-    }
-}
 
-
-function updateUser(state='', action) {
-    switch(action.type) {
-        case SET_USERUPDATE:
-            console.log('SET_USERUPDATE triggered');
-            return action.value;
-            default: return state;
-    }
-}
-
-function deleteUser(state=[], action) {
-    switch(action.type) {
-        case SET_USERDELETE:
-            console.log('SET_USERDELETE triggered');
-            return action.value;
-            default: return state;
     }
 }
 
@@ -72,8 +73,6 @@ const moviesApp = combineReducers({
     visibilityFilter,
     movies,
     setUser,
-    updateUser,
-    deleteUser,
     favorites,
     removeFavorites
 });
