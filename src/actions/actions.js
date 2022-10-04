@@ -4,7 +4,7 @@ export const CREATE_USER = 'CREATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_FAVORITES = 'SET FAVORITES';
-export const SET_REMOVEFAVORITES = 'SET_REMOVEFAVORITES';
+export const REMOVE_FAVORITES = 'SET_REMOVEFAVORITES';
 
 export function setMovies(value) {
     return {
@@ -20,13 +20,10 @@ export function setFilter(value) {
     };
 }
 
-export function createUser(username, password, email, birthday) {
+export function createUser(text) {
     return {
         type: CREATE_USER,
-        username: username,
-        password: password,
-        email: email,
-        birthday: birthday
+        text
     };
 }
 
@@ -38,26 +35,24 @@ export function deleteUser(id) {
 }
 
 
-export function updateUser(username, password, email, birthday) {
+export function updateUser(text) {
     return {
         type: UPDATE_USER,
         username: username,
-        password: password,
-        email: email,
-        birthday: birthday
+        text
     };
 }
 
-export function setFavorites(value) {
+export function setFavorites(index) {
     return {
         type: SET_FAVORITES,
-        value
+        index
     };
 }
 
-export function setRemoveFavorites(value) {
+export function toggleFavorites(index) {
     return {
-        type: SET_REMOVEFAVORITES,
-        value
+        type: TOGGLE_FAVORITES,
+        index
     };
 }

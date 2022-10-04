@@ -109,8 +109,7 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
     this.state.Birthday = value;
   }
 
-  deleteProfile(e, Username) {
-    e.preventDefault();
+  deleteProfile() {
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
