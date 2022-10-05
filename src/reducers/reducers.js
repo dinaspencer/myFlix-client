@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { SET_FILTER, SET_MOVIES, CREATE_USER, UPDATE_USER, DELETE_USER,  SET_FAVORITES, TOGGLE_FAVORITES } from "../actions/actions";
+import { SET_FILTER, SET_MOVIES, CREATE_USER, UPDATE_USER, DELETE_USER,  SET_FAVORITES, REMOVE_FAVORITES } from "../actions/actions";
 
 function visibilityFilter(state='', action) {
     switch (action.type) {
@@ -51,19 +51,21 @@ function users(state={}, action) {
     }
 }
 
-//here we want to add (or toggle?) favorites - we're not creating a new favorite, just toggling whether it's "added" to the array or not. 
+
 function favorites(state=[], action) {
     switch(action.type) {
+        //add to the array
         case SET_FAVORITES:
-            return [
+            return {
                 ...state, 
-                {
-                    index: action.index,
-                    added: false
-                }
-            ]
-        case TOGGLE_FAVORITES:
-            return state.map((favorite, index) => (index === action.index) ? {...favorite, added: !favorite.added} : favorite)
+                favorites: [...state.favorites, action.index] 
+            }
+        case REMOVE_FAVORITES:
+            //remove from the array
+            return {
+                ...state,
+                favorites: [...state.favorites.slice(0, index), state.favorites.slice(index + 1)]
+            }
             
             default: return state;
 

@@ -3,8 +3,10 @@ import axios from "axios";
 import "./profile-view.scss";
 import { Container, Button, Card, Row, Col, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+
+//redux imports
 import { connect } from 'react-redux';
-import { setUser, updateUser, deleteUser } from '../../actions/actions';
+import { createUser, updateUser, deleteUser, removeFavorites } from '../../actions/actions';
 
  class ProfileView extends React.Component {
   constructor() {
@@ -58,6 +60,10 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
     e.preventDefault();
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+
+    this.props.dispatch({type: 'UPDATE_USER'});
+
+
     axios
       .put(
         `https://dinaspencer-myflix.herokuapp.com/users/${Username}`,
@@ -109,9 +115,12 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
     this.state.Birthday = value;
   }
 
-  deleteProfile() {
+  deleteProfile(e) {
+    e.preventDefault();
     const Username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+
+    this.props.dispatch({type: 'DELETE_USER'});
 
     axios
       .delete(`https://dinaspencer-myflix.herokuapp.com/users/${Username}`, {
@@ -135,12 +144,10 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
       const user = localStorage.getItem('user');
       const token = localStorage.getItem('token');
       
-      console.log(this.props);
 
     
       axios.delete(`https://dinaspencer-myflix.herokuapp.com/users/${user}/movies/${movieId}`, {headers: {Authorization: `Bearer ${token}`}
   }).then((response) => {
-      console.log(response);
       alert('You have removed the movie from your favorites.');
       this.componentDidMount();
   }).catch(function(error) {
@@ -272,17 +279,15 @@ import { setUser, updateUser, deleteUser } from '../../actions/actions';
   }
 }
 
-let mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     Username: state.username,
     Password: state.password,
     Email: state.email,
     Birthday: state.birthday,
     FavoriteMovies: state.FavoriteMovies,
     movies: state.movies,
-  };
-};
+});
 
 
 
-export default connect(mapStateToProps, { setUser, updateUser, deleteUser })(ProfileView);
+export default connect(mapStateToProps, { updateUser, deleteUser, removeFavorites })(ProfileView);

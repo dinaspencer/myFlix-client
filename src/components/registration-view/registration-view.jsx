@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button, Card, CardGroup, Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setUser } from '../../actions/actions';
+import { createUser } from '../../actions/actions';
 import './registration-view.scss';
 
-export function RegistrationView() {
+ function RegistrationView() {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ email, setEmail] = useState('');
@@ -49,6 +48,8 @@ export function RegistrationView() {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        this.props.dispatch({type: 'CREATE_USER'});
+
         const isReq = validate();
         if(isReq) {
         axios.post('https://dinaspencer-myflix.herokuapp.com/registration', {
@@ -130,11 +131,12 @@ export function RegistrationView() {
     );
     }
 
- RegistrationView.propTypes = {
-    register: PropTypes.shape({
-      Username: PropTypes.string.isRequired,
-      Password: PropTypes.string.isRequired,  
-      Email: PropTypes.string.isRequired,
-    }),
-};
+
+const mapStateToProps = (state) => ({
+    Username: state.username,
+    Password: state.password,
+    Email: state.email,
+    Birthday: state.birthday
+})
  
+export default connect(mapStateToProps, { createUser })(RegistrationView);

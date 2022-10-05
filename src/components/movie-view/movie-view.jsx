@@ -3,16 +3,22 @@ import axios from "axios";
 import { Button, Col, Row, Card, Container } from 'react-bootstrap';
 import './movie-view.scss';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { SET_FAVORITES } from "../../actions/actions";
 
-export class MovieView extends React.Component {
+class MovieView extends React.Component {
     constructor() {
         super();
         this.state= {};
     }
 
     addFavoriteMovie(e) {
-        const { movie } = this.props;
+     
+        //const { movie } = this.props;
         e.preventDefault();
+
+        this.props.dispatch({type: 'SET_FAVORITES'});
+
         axios
           .post(
             `https://dinaspencer-myflix.herokuapp.com/users/${localStorage.getItem(
@@ -63,10 +69,17 @@ export class MovieView extends React.Component {
                 </Card.Body>
                 <Card.Footer>
                 <Button variant="primary" onClick={() => {onBackClick();}}>Back</Button>
-                <Button style={{marginLeft:"32px"}} variant="warning" className="favorite-button" value={movie._id} onClick={(e)=> this.addFavoriteMovie(e, movie)}>Add to Favorites</Button>
+                <Button style={{marginLeft:"32px"}} variant="warning" className="favorite-button" value={movie._id} onClick={(e)=> this.addFavoriteMovie}>Add to Favorites</Button>
                 </Card.Footer>
         </Card>
         </Container>
        );
     }
 }
+
+
+const mapStateToProps = (state) => ({
+  favorites: state.favorites
+});
+
+export default connect(mapStateToProps)(MovieView);
